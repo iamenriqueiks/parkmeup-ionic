@@ -10,14 +10,14 @@ export class PublicGuard implements CanActivate {
                 private authenticationService: AuthenticationService) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        const isUserAuthenticated = this.authenticationService.isUserAuthenticated();
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+        return this.authenticationService.isUserAuthenticated().then(isUserAuthenticated => {
+            if (!isUserAuthenticated) {
+                return true;
+            }
 
-        if (!isUserAuthenticated) {
-            return true;
-        }
-
-        this.router.navigate(['/auth']);
-        return false;
+            this.router.navigate(['/auth']);
+            return false;
+        });
     }
 }
