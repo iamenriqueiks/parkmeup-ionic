@@ -8,6 +8,10 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
+import Backendless from 'backendless';
+import {environment as ENV} from '../environments/environment';
+
+Backendless.initApp(ENV.BACKENDLESS.APP_ID, ENV.BACKENDLESS.API_KEY);
 
 @NgModule({
     declarations: [AppComponent],
