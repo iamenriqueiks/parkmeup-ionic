@@ -1,0 +1,21 @@
+.pm-login {
+  --background: #2f55a5;
+
+  &__footer {
+    background: #2f55a5;
+
+    &:before {
+      content: unset;
+    }
+
+    img {
+      width: 50%;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  ion-card {
+    --background: white;
+  }
+}

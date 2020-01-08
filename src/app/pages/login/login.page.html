@@ -1,15 +1,24 @@
-<ion-content class="ion-padding">
-    <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input name="email" [(ngModel)]="email" type="email"></ion-input>
-    </ion-item>
+<ion-content class="ion-padding pm-login">
+    <ion-card>
+        <img src="../../../assets/parking.png" alt="" style="width:100px;margin: 10px auto">
+        <ion-card-content>
+            <ion-item>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input name="email" [(ngModel)]="email" type="email"></ion-input>
+            </ion-item>
 
-    <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input name="email" [(ngModel)]="password" type="password"></ion-input>
-    </ion-item>
+            <ion-item>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input name="email" [(ngModel)]="password" type="password"></ion-input>
+            </ion-item>
 
-    <ion-button expand="full" (click)="submitLogIn()" [disabled]="!canSubmitLogin">Iniciar Sesión</ion-button>
+            <ion-button expand="full" (click)="submitLogIn()" [disabled]="!canSubmitLogin">Iniciar Sesión</ion-button>
 
-    <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
+            <ion-progress-bar type="indeterminate" *ngIf="isLoading"></ion-progress-bar>
+        </ion-card-content>
+    </ion-card>
 </ion-content>
+
+<ion-footer class="pm-login__footer">
+    <img src="../../../assets/iknesoft-white-transparent.png" alt="Iknesoft Logo">
+</ion-footer>
