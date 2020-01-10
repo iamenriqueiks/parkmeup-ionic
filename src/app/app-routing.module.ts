@@ -10,8 +10,7 @@ const routes: Routes = [
     {path: 'public', loadChildren: () => import('./pages/public/public.module').then(m => m.PublicPageModule), canActivate: [PublicGuard]},
 {
     path: 'crear-empresa',
-    loadChildren: () => import('./pages/crear-empresa/crear-empresa.module').then( m => m.CrearEmpresaPageModule)},
-  { 
+    loadChildren: () => import('./pages/crear-empresa/crear-empresa.module').then( m => m.CrearEmpresaPageModule)}
 ];
 
 @NgModule({
