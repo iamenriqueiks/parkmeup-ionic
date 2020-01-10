@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { Company } from 'src/app/models/remote';
+import { ParkingService } from 'src/app/services/parking.service';
 
 @Component({
     selector: 'app-auth',
@@ -11,16 +13,21 @@ import { MenuController } from '@ionic/angular';
 export class AuthPage implements OnInit {
 
     public user: Backendless.User;
+    public companias: Company[];
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
-                private menu: MenuController) {
+                private menu: MenuController, private parkingService: ParkingService) {
     }
 
     ngOnInit() {
         this.authenticationService.getCurrentUser().then((user:Backendless.User) => {
             this.user = user;
             console.log(this.user.username);
+        });
+
+        this.parkingService.getCompaniesIBelongTo().then((a:Company[])=>{
+            this.companias=a;
         });
     }
 
@@ -46,5 +53,9 @@ export class AuthPage implements OnInit {
 
     toggleMenu() {
         this.menu.toggle();
+    }
+
+    AddCompany() {
+        
     }
 }

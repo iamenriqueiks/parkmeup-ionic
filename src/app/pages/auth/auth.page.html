@@ -1,17 +1,42 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>¡Bienvenido!</ion-title>
+
     <ion-buttons slot="start">
       <!-- BOTON DEL MENU BAR -->
       <ion-button (click)="toggleMenu()">
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
-
     </ion-buttons>
+
+    <!-- Boton de Crear Compañia -->
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleMenu()" class="ion-justify-content-end">
+        <ion-icon slot="end" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- Compañias -->
+
+  <!-- Cards -->
+  <ion-card *ngFor="let compani of companias">
+    <img src="../../assets/shapes.svg" alt="SVG image">
+
+    <ion-card-header>
+        <ion-card-title>{{compani.name}}</ion-card-title>
+        <ion-card-subtitle>{{compani.address}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+        <div>{{compani.objectId}}</div>
+    </ion-card-content>
+  </ion-card>
+  <!-- End Card -->
+
   <!-- Menu -->
   <ion-menu side="start" menuId="first" contentId="principal">
     <ion-header>
@@ -31,6 +56,8 @@
       </ion-list>
     </ion-content>
   </ion-menu>
+
+<!-- End Menu -->
   
   <ion-router-outlet id="principal"></ion-router-outlet>
 </ion-content>
