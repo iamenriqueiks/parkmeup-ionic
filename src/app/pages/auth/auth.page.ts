@@ -15,7 +15,10 @@ export class AuthPage implements OnInit {
                 private menu: MenuController) {
     }
 
+    UserActual;
+
     ngOnInit() {
+        this.getUser();
     }
 
     logOut() {
@@ -27,5 +30,12 @@ export class AuthPage implements OnInit {
     openFirst() {
         this.menu.enable(true, 'first');
         this.menu.open('first');
+    }
+
+    getUser(){
+        this.authenticationService.getCurrentUser().then(user =>{
+            this.UserActual=user.name;
+            console.log(user);
+        });
     }
 }
