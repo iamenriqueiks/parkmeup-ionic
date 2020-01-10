@@ -28,6 +28,11 @@ export class ListaEmpresasPage implements OnInit {
   })
   }
 
+  loginIntoCompany(){
+    console.log("Hola");
+    
+  }
+
 
 
 }
