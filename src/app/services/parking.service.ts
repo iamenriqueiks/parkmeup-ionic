@@ -43,7 +43,7 @@ export class ParkingService {
         const queryBuilder = Backendless.DataQueryBuilder.create();
         queryBuilder
             .setWhereClause(`objectId = '${companyObjectId}'`)
-            .setRelated(['employees']);
+            .setRelated(['employees', 'parkingLots']);
 
         return CompanyStore.find<Company>(queryBuilder).then(results => {
             if (results && results.length) {
