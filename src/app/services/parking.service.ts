@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Company, ParkingLot} from '../models/remote';
+import {Company, ParkingLot, ParkingLotAllocation} from '../models/remote';
 import {AuthenticationService} from './authentication.service';
 
 const CompanyStore = Backendless.Data.of('Companies');
@@ -74,6 +74,23 @@ export class ParkingService {
             return CompanyStore.addRelation({objectId: companyObjectId}, 'parkingLots', [persistedParkingLot.objectId]);
         }).then(() => {
             return parkingLot;
+        });
+    }
+
+    public createReservation(parkingLotAllocation: ParkingLotAllocation): Promise<void> {
+        let currentUser: Backendless.User;
+        return this.authenticationService.getCurrentUser().then(user => {
+            currentUser = user;
+            return ParkingLotAllocationStore.save<ParkingLotAllocation>(parkingLotAllocation);
+        }).then(persistedAllocation => {
+            const promises = [
+                ParkingLotAllocationStore.setRelation(persistedAllocation, 'allocatedFor', [currentUser.objectId]),
+                ParkingLotAllocationStore.setRelation(persistedAllocation, 'parkingLot', [parkingLotAllocation.parkingLot.objectId]),
+            ];
+
+            return Promise.all(promises);
+        }).then(responses => {
+            return;
         });
     }
 }
