@@ -1,14 +1,36 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>¡Bienvenido!</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="logOut()">
-        <ion-icon slot="icon-only" name="exit"></ion-icon>
+    <ion-buttons slot="start">
+      <!-- BOTON DEL MENU BAR -->
+      <ion-button (click)="toggleMenu()">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <router-outlet></router-outlet>
+  <!-- Menu -->
+  <ion-menu side="start" menuId="first" contentId="principal">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menú Principal</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>Current User</ion-item>
+        <ion-item>
+          LogOut&nbsp;&nbsp;&nbsp;
+          <ion-button (click)="logOut()">
+            <ion-icon slot="icon-only" name="exit"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <router-outlet id="principal"></router-outlet>
 </ion-content>
