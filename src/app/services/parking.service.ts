@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Company, ParkingLot} from '../models/remote';
+import {Company, ParkingLot, ParkingLotAllocation} from '../models/remote';
 import {AuthenticationService} from './authentication.service';
+import {ParkingStatusEntry} from '../models/local';
 
 const CompanyStore = Backendless.Data.of('Companies');
 const ParkingLotStore = Backendless.Data.of('ParkingLots');
@@ -43,7 +44,7 @@ export class ParkingService {
         const queryBuilder = Backendless.DataQueryBuilder.create();
         queryBuilder
             .setWhereClause(`objectId = '${companyObjectId}'`)
-            .setRelated(['employees']);
+            .setRelated(['employees', 'parkingLots']);
 
         return CompanyStore.find<Company>(queryBuilder).then(results => {
             if (results && results.length) {
@@ -53,17 +54,52 @@ export class ParkingService {
         });
     }
 
-    public addMemberToCompany(memberEmail: string): Promise<void> {
-        // TODO: Implement this!
-        return new Promise((resolve, reject) => {
-            setTimeout(reject, 1500, false);
+    public addMemberToCompany(companyObjectId: string, memberEmail: string): Promise<void> {
+        const UsersStore = Backendless.Data.of('Users');
+        const queryBuilder = Backendless.DataQueryBuilder.create();
+        queryBuilder.setWhereClause(`email = '${memberEmail}'`);
+
+        let userToAdd: Backendless.User;
+        return UsersStore.find(queryBuilder).then((result: Backendless.User[]) => {
+            if (result && result.length) {
+                userToAdd = result[0];
+            }
+            return CompanyStore.addRelation({objectId: companyObjectId}, 'employees', [userToAdd.objectId]);
+        }).then(() => {
+            return;
         });
     }
 
-    public createParkingLot(company: Company, lot: ParkingLot): Promise<void> {
-        // TODO: Implement this!
+    public createParkingLot(companyObjectId: string, lot: ParkingLot): Promise<ParkingLot> {
+        let parkingLot: ParkingLot;
+        return ParkingLotStore.save<ParkingLot>(lot).then(persistedParkingLot => {
+            parkingLot = persistedParkingLot;
+            return CompanyStore.addRelation({objectId: companyObjectId}, 'parkingLots', [persistedParkingLot.objectId]);
+        }).then(() => {
+            return parkingLot;
+        });
+    }
+
+    public createReservation(parkingLotAllocation: ParkingLotAllocation): Promise<void> {
+        let currentUser: Backendless.User;
+        return this.authenticationService.getCurrentUser().then(user => {
+            currentUser = user;
+            return ParkingLotAllocationStore.save<ParkingLotAllocation>(parkingLotAllocation);
+        }).then(persistedAllocation => {
+            const promises = [
+                ParkingLotAllocationStore.setRelation(persistedAllocation, 'allocatedFor', [currentUser.objectId]),
+                ParkingLotAllocationStore.setRelation(persistedAllocation, 'parkingLot', [parkingLotAllocation.parkingLot.objectId]),
+            ];
+
+            return Promise.all(promises);
+        }).then(responses => {
+            return;
+        });
+    }
+
+    public getCompanyParkingStatus(companyObjectId): Promise<ParkingStatusEntry> {
         return new Promise((resolve, reject) => {
-            setTimeout(reject, 1500, false);
+            setTimeout(reject, 1500, []);
         });
     }
 }
