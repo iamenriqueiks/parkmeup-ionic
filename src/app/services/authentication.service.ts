@@ -25,4 +25,8 @@ export class AuthenticationService {
     public logOut(): Promise<void> {
         return Backendless.UserService.logout();
     }
+
+    public getCurrentUser(): Promise<Backendless.User> {
+        return Backendless.UserService.getCurrentUser();
+    }
 }
