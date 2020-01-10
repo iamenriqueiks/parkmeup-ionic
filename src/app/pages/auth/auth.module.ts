@@ -7,13 +7,19 @@ import {IonicModule} from '@ionic/angular';
 import {AuthPageRoutingModule} from './auth-routing.module';
 
 import {AuthPage} from './auth.page';
+import { PublicPage } from '../public/public.page';
+import { PublicPageModule } from '../public/public.module';
 
 @NgModule({
+    entryComponents: [
+        PublicPage
+    ],
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        AuthPageRoutingModule
+        AuthPageRoutingModule,
+        PublicPageModule
     ],
     declarations: [AuthPage]
 })

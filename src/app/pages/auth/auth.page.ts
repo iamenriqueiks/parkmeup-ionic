@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Company } from 'src/app/models/remote';
 import { ParkingService } from 'src/app/services/parking.service';
+import { ModalController } from '@ionic/angular';
+import { PublicPage } from '../public/public.page';
 
 @Component({
     selector: 'app-auth',
@@ -17,8 +19,17 @@ export class AuthPage implements OnInit {
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
-                private menu: MenuController, private parkingService: ParkingService) {
+                private menu: MenuController, private parkingService: ParkingService,
+                public modalController: ModalController) {
     }
+
+    async presentModal() {
+        const modal = await this.modalController.create({
+          component: PublicPage
+        });
+        
+        return await modal.present();
+      }
 
     ngOnInit() {
         this.authenticationService.getCurrentUser().then((user:Backendless.User) => {
@@ -55,7 +66,4 @@ export class AuthPage implements OnInit {
         this.menu.toggle();
     }
 
-    AddCompany() {
-        
-    }
 }

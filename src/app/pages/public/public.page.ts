@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { NavParams } from '@ionic/angular';
 
 @Component({
     selector: 'app-public',
