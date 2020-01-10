@@ -1,0 +1,39 @@
+
+<ion-header>
+  <ion-toolbar>
+   
+    <ion-title>Crear Empresa</ion-title>
+    <ion-buttons slot="end">
+    <ion-button>
+    <ion-icon ios="ios-create" md="md-create" slot="end"></ion-icon>
+  </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+  
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+
+  <ion-item>
+    <ion-label position="floating">Nombre de la compañía</ion-label>
+    <ion-input name="name" required></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Dirección</ion-label>
+    <ion-input name="address"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Número de teléfono</ion-label>
+    <ion-input name="phoneNumber"></ion-input>
+  </ion-item>
+  </ion-list>
+
+  <div class="ion-padding">
+    <ion-button expand="block" type="submit" class="ion-no-margin" (click)="createCompany()">Crea nueva empresa</ion-button>
+  </div>
+
+</ion-card>
+</ion-content>
+
