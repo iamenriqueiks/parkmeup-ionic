@@ -34,7 +34,7 @@ export class AuthPage implements OnInit {
 
     getUser(){
         this.authenticationService.getCurrentUser().then(user =>{
-            this.UserActual=user.name;
+            this.UserActual=user.username;
             console.log(user);
         });
     }
