@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
     selector: 'app-auth',
@@ -10,15 +11,31 @@ import {Router} from '@angular/router';
 export class AuthPage implements OnInit {
 
     constructor(private router: Router,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private menu: MenuController) {
     }
 
+    UserActual;
+
     ngOnInit() {
+        this.getUser();
     }
 
     logOut() {
         this.authenticationService.logOut().then(() => {
             return this.router.navigate(['public']);
+        });
+    }
+
+    openFirst() {
+        this.menu.enable(true, 'first');
+        this.menu.open('first');
+    }
+
+    getUser(){
+        this.authenticationService.getCurrentUser().then(user =>{
+            this.UserActual=user.username;
+            console.log(user);
         });
     }
 }
