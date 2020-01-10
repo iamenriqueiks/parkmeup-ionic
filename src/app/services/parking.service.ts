@@ -67,10 +67,13 @@ export class ParkingService {
         });
     }
 
-    public createParkingLot(company: Company, lot: ParkingLot): Promise<void> {
-        // TODO: Implement this!
-        return new Promise((resolve, reject) => {
-            setTimeout(reject, 1500, false);
+    public createParkingLot(companyObjectId: string, lot: ParkingLot): Promise<ParkingLot> {
+        let parkingLot: ParkingLot;
+        return ParkingLotStore.save<ParkingLot>(lot).then(persistedParkingLot => {
+            parkingLot = persistedParkingLot;
+            return CompanyStore.addRelation({objectId: companyObjectId}, 'parkingLots', [persistedParkingLot.objectId]);
+        }).then(() => {
+            return parkingLot;
         });
     }
 }
