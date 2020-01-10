@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Company, ParkingLot, ParkingLotAllocation} from '../models/remote';
 import {AuthenticationService} from './authentication.service';
+import {ParkingStatusEntry} from '../models/local';
 
 const CompanyStore = Backendless.Data.of('Companies');
 const ParkingLotStore = Backendless.Data.of('ParkingLots');
@@ -53,7 +54,7 @@ export class ParkingService {
         });
     }
 
-    public addMemberToCompany(companyObjectId: string, memberEmail: string): Promise<any> {
+    public addMemberToCompany(companyObjectId: string, memberEmail: string): Promise<void> {
         const UsersStore = Backendless.Data.of('Users');
         const queryBuilder = Backendless.DataQueryBuilder.create();
         queryBuilder.setWhereClause(`email = '${memberEmail}'`);
@@ -64,6 +65,8 @@ export class ParkingService {
                 userToAdd = result[0];
             }
             return CompanyStore.addRelation({objectId: companyObjectId}, 'employees', [userToAdd.objectId]);
+        }).then(() => {
+            return;
         });
     }
 
@@ -91,6 +94,12 @@ export class ParkingService {
             return Promise.all(promises);
         }).then(responses => {
             return;
+        });
+    }
+
+    public getCompanyParkingStatus(companyObjectId): Promise<ParkingStatusEntry> {
+        return new Promise((resolve, reject) => {
+            setTimeout(reject, 1500, []);
         });
     }
 }
