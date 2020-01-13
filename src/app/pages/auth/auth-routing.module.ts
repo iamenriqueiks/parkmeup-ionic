@@ -8,7 +8,8 @@ const routes: Routes = [
         path: '',
         component: AuthPage,
         children: [
-
+            {path: '', redirectTo: 'lista-empresas', pathMatch: 'full'},
+            {path: 'lista-empresas', loadChildren: () => import('../lista-empresas/lista-empresas.module').then( m => m.ListaEmpresasPageModule)}
         ]
     }
 ];
