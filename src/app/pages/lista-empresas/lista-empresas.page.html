@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Empresas Registradas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card (click)="loginIntoCompany()" *ngFor="let card of companyList" >
+    <ion-card-header>
+      <ion-card-title>{{card.name}}</ion-card-title>
+      <ion-card-subtitle>{{card.address}}</ion-card-subtitle>
+      
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-label>{{card.phoneNumber}}</ion-label>
+    </ion-card-content>
+    
+  </ion-card>
+</ion-content>
